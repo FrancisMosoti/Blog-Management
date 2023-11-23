@@ -1,0 +1,84 @@
+{% extends 'master.html' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-8 mx-auto mt-3">
+            <div class="card p-3 m-2">
+                <h5 class="card-header">
+                    Create a post
+                </h5>
+                {% for message in messages %}{% if message %}
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %} {% endfor %}
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" name="title" id="title" value="{{ posts.title }}">
+
+                    </div>
+{#                    <div class="mb-2">#}
+{#                        <label for="body" class="form-label">Body Content</label>#}
+{#                        <textarea name="body" class="form-control" id="body"#}
+{#                                  value="" rows="3"></textarea>#}
+{#                    </div>#}
+                    <div class="mb-3">
+                        <label for="body" class="form-label">body</label>
+                        <input type="text" name="body" id="body" value="{{ posts.body }}">
+
+                    </div>
+                    <div class="mb-3">
+                        <label for="user" class="form-label">Post User</label>
+                        <input type="text" name="post_user" id="user" value="{{ user.username }}" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="use" class="form-label">Post User</label>
+                        <input type="text" name="category" id="use" value="{{ posts.category }}">
+                    </div>
+{#                    <div class="mb-3">#}
+{#                        <select name="category" class="form-select"#}
+{#                                aria-label="Default select example">#}
+{#                            <option value="{{ posts.category }}" selected>Select Category</option>#}
+{##}
+{#                        </select>#}
+{##}
+{#                    </div>#}
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="file" name="image" class="form-control" id="inputGroupFile04"
+                                   aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                        </div>
+
+                    </div>
+
+                    <div class="my-3">
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {#class #}
+    <script>
+        const form_fields = document.getElementsByTagName('input');
+        form_fields[1].placeholder='Enter title';
+        form_fields[2].placeholder='Post body';
+        form_fields[3].placeholder='Category';
+
+        const form_field = document.getElementsByTagName('select');
+        for (const fields in form_field){
+            form_fields[fields].className += 'form-control'
+        }
+
+
+        for (const field in form_fields){
+            form_fields[field].className += 'form-control'
+        }
+    </script>
+{% endblock %}>
