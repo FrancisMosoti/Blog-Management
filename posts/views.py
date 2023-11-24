@@ -40,4 +40,24 @@ def delete(request, id):
 def edit_post(request, id):
     item = Posts.objects.get(id=id)
     content = {"posts": item}
+    if request.method == "POST":
+        title = request.POST.get('title')
+        body = request.POST.get('body')
+        category = request.POST.get('category')
+        post_user = request.POST.get('post_user')
+        image = request.FILES.get('image')
+        item.title = title
+        item.body = body
+        item.category = category
+        item.post_user = post_user
+        item.image = image
+        item.save()
+        messages.success(request, "Post updated successfully")
+        return redirect("home-url")
+
     return render(request, 'posts/edit-post.html', content)
+
+
+def show(request, id):
+    post = Posts.objects.get(id=id)
+    return render(request, 'blog-post.html', {'post': post})
