@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import PostsForm
 from django.contrib import messages
 from .models import Posts
+from comments.models import Comments
 
 
 # Create your views here.
@@ -60,4 +61,5 @@ def edit_post(request, id):
 
 def show(request, id):
     post = Posts.objects.get(id=id)
-    return render(request, 'blog-post.html', {'post': post})
+    comments = Comments.objects.all().filter(post_id=id)
+    return render(request, 'blog-post.html', {'post': post, 'comments': comments})

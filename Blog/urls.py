@@ -24,4 +24,5 @@ urlpatterns = [
     path('post/', my_views.post, name="post-url"),
     path('auth/', include('auth.urls')),
     path('posts/', include('posts.urls')),
+    path('posts/', include('comments.urls')),
 ]

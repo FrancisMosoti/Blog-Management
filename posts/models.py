@@ -8,13 +8,12 @@ User = settings.AUTH_USER_MODEL
 # Create your models here.
 class Posts(models.Model):
     title = models.CharField(max_length=255, blank=False, null=False)
-    body = models.CharField(max_length=255, blank=False, null=False)
     post_user = models.CharField(max_length=255, blank=False, null=False)
+    body = models.TextField(blank=False, null=False)
     category = models.CharField(max_length=100, blank=False, null=False)
     image = models.ImageField(upload_to='static/images/img_posts/')
 
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # updated_at = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, null=True)
 
     def save(self, *args, **kwargs):
         super(Posts, self).save(*args, **kwargs)

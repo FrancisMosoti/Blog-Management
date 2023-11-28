@@ -5,7 +5,7 @@
         <div class="container single-col-max-width">
             <header class="blog-post-header">
                 <h2 class="title mb-2">{{ post.title }}</h2>
-                <div class="meta mb-3"><span class="date">Published by: {{ post.post_user }}</span><span class="time">{{ post.category }}</span><span class="comment"><a  class="text-link" href="#">4 comments</a></span></div>
+                <div class="meta mb-3"><span class="date">Published by: {{ post.post_user }}</span><span class="time">Published : {{ post.created |timesince }} ago</span><span class="time">{{ post.category }}</span><span class="comment"><a  class="text-link" href="#">4 comments</a></span></div>
             </header>
 
             <div class="blog-post-body mb-3">
@@ -27,9 +27,32 @@
             <div class="blog-comments-section">
                 <div id="disqus_thread">
                     <div class="mb-3">
-                        <label for="comment" class="form-label">Leave a comment</label>
-                        <input type="text" name="comment" class="form-control" id="comment"  placeholder="Start the conversation...">
+                        <form action="{% url 'send-comment-url' %}" method="post" class="row">
+                            {% csrf_token %}
+                            <div class="col-10">
+                                <label for="comment" class="form-label">Leave a comment</label>
+                                <input type="text" name="comment" class="form-control" id="comment"  placeholder="Start the conversation...">
+                            </div>
+
+                            <input type="hidden" name="comment_user" value="{{ user.username }}" class="form-control">
+                            <input type="hidden" name="post_id" value="{{ post.id }}" class="form-control">
+                            <button type="submit" class="btn btn-primary col-2 d-inline-block mt-5">Send</button>
+                        </form>
                     </div>
+                    {% for comment in comments %}
+                        <ol class="list-group my-3">
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold text-primary">{{ comment.comment_user }}</div>
+                                    {{ comment.comment }}
+
+                                </div>
+
+                                <span class="badge bg-primary rounded-pill">{{ comment.created_at|timesince }} ago</span>
+                            </li>
+                        </ol>
+                    {% endfor %}
+
                 </div>
 
 
